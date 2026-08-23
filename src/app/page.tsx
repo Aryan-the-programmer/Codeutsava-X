@@ -5,6 +5,7 @@ import { SponsorSection } from "@/components/sponsor-section/SponsorSection";
 import { TimelineRoad } from '@/components/timeline/TimelineRoad';
 import { GuidelinesSection } from '@/components/sections/guidelines-section';
 import { PrizesSection } from '@/components/sections/prizes-section';
+import { GraphAnalytics } from '@/components/analytics/GraphAnalytics';
 import { EventSections } from '@/components/sections/EventSections';
 import { AboutSection } from '@/components/sections/about-section';
 import { BackgroundVideo } from '@/components/layout/BackgroundVideo';
@@ -25,6 +26,7 @@ export default function Home() {
         <TimelineRoad />
         <GuidelinesSection />
         <PrizesSection />
+          <GraphAnalytics />
         <EventSections />
       </div>
     </ExperienceShell>
