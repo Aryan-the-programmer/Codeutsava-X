@@ -9,6 +9,9 @@ import {
   type ReactNode,
 } from "react";
 import styles from "./ExperienceShell.module.css";
+import { retroAudio } from "@/utils/audioEffects";
+import { introSoundtrack } from "@/utils/introSoundtrack";
+import { cyberSoundtrack } from "@/utils/cyberSoundtrack";
 
 const GLYPHS = [..."CODEUTSAVA", " ", ..."X", ".O"];
 
@@ -106,15 +109,60 @@ export function ExperienceShell({ children }: { children: ReactNode }) {
     };
   }, []);
 
+  const [isIntroMusicPlaying, setIsIntroMusicPlaying] = useState<boolean>(introSoundtrack.getIsPlaying());
+
+  useEffect(() => {
+    return introSoundtrack.subscribe((playing) => setIsIntroMusicPlaying(playing));
+  }, []);
+
+  useEffect(() => {
+    const handleFirstInteraction = () => {
+      if (isIntroMusicPlaying && !introSoundtrack.getIsPlaying()) {
+        introSoundtrack.start(true);
+      }
+    };
+    window.addEventListener("pointerdown", handleFirstInteraction, { once: true });
+    window.addEventListener("keydown", handleFirstInteraction, { once: true });
+    return () => {
+      window.removeEventListener("pointerdown", handleFirstInteraction);
+      window.removeEventListener("keydown", handleFirstInteraction);
+    };
+  }, [isIntroMusicPlaying]);
+
+  const toggleIntroMusic = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const muted = introSoundtrack.toggleMute();
+    setIsIntroMusicPlaying(!muted);
+  };
+
   const enter = () => {
     if (!ready || entering) return;
     setHeroMounted(true);
     setEntering(true);
+    
+    retroAudio.playIntroPortalSound();
+    introSoundtrack.fadeOutAndStop(0.4);
+
+    // Synchronously start website background music on user gesture so audio context is unlocked immediately
+    cyberSoundtrack.start(true);
+
     transitionTimerRef.current = window.setTimeout(() => {
       setEntered(true);
       transitionTimerRef.current = null;
     }, reducedMotionRef.current ? 180 : 640);
   };
+
+  useEffect(() => {
+    if (!ready || entered || entering) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        enter();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [ready, entered, entering, isIntroMusicPlaying]);
 
   return (
     <div
@@ -127,6 +175,28 @@ export function ExperienceShell({ children }: { children: ReactNode }) {
             <div className={styles.bloom} aria-hidden="true" />
             <div className={styles.scanlines} aria-hidden="true" />
             <div className={styles.noise} aria-hidden="true" />
+
+            {/* Intro Sound Toggle Icon (Logo Only, Bottom-Right Orange Position) */}
+            <button
+              className={styles.introSoundToggle}
+              type="button"
+              onClick={toggleIntroMusic}
+              title={isIntroMusicPlaying ? "Mute Intro Audio" : "Play Intro Audio"}
+              aria-label={isIntroMusicPlaying ? "Mute Intro Audio" : "Play Intro Audio"}
+            >
+              {isIntroMusicPlaying ? (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M11 5L6 9H2v6h4l5 4V5z" />
+                  <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
+                </svg>
+              ) : (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M11 5L6 9H2v6h4l5 4V5z" />
+                  <line x1="23" y1="9" x2="17" y2="15" />
+                  <line x1="17" y1="9" x2="23" y2="15" />
+                </svg>
+              )}
+            </button>
             <section
               className={styles.bios}
               data-intro-content

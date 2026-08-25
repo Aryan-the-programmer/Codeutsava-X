@@ -224,3 +224,40 @@
   45% { opacity: .8; filter: contrast(1.5) saturate(1.35); }
   100% { opacity: 0; filter: none; }
 }
+
+.introSoundToggle {
+  position: absolute;
+  right: clamp(16px, 3.8vw, 44px);
+  bottom: clamp(16px, 3.5vh, 36px);
+  z-index: 45;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: rgba(14, 7, 28, 0.85);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(247, 239, 214, 0.3);
+  border-radius: 50%;
+  color: #f7efd6;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), inset 0 0 8px rgba(140, 86, 212, 0.25);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.introSoundToggle:hover {
+  background: rgba(87, 48, 179, 0.9);
+  border-color: #ff5fcf;
+  color: #ff5fcf;
+  box-shadow: 0 0 22px rgba(255, 95, 207, 0.45);
+  transform: translateY(-2px) scale(1.06);
+}
+
+@media (max-width: 760px) {
+  .introSoundToggle {
+    bottom: 14px;
+    right: 14px;
+    width: 38px;
+    height: 38px;
+  }
+}

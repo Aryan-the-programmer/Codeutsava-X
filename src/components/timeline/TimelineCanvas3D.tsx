@@ -897,28 +897,10 @@ export const TimelineCanvas3D: React.FC<TimelineCanvas3DProps> = ({
     >
       <canvas ref={canvasRef} className="w-full h-full block" />
 
-      {/* Desktop Hover Tooltip */}
+      {/* Compact Stage Indicator Pill for both PC and Android */}
       {hoveredEvent && (
         <div
-          className="hidden sm:flex absolute bottom-8 left-1/2 -translate-x-1/2 bg-black/95 backdrop-blur-xl border-2 px-5 py-2.5 rounded-xl shadow-[0_0_30px_rgba(255,95,207,0.4)] items-center gap-3 text-xs font-mono pointer-events-none transition-all z-30 whitespace-nowrap"
-          style={{ borderColor: hoveredEvent.accentColor }}
-        >
-          <span className="text-white font-bold">{hoveredEvent.stageCode}:</span>
-          <span className="text-gray-200 font-sans font-medium">{hoveredEvent.title}</span>
-          <span className="text-gray-400">({hoveredEvent.date})</span>
-          <span
-            className="px-2 py-0.5 rounded text-[10px] font-black uppercase"
-            style={{ backgroundColor: `${hoveredEvent.accentColor}30`, color: hoveredEvent.accentColor }}
-          >
-            {hoveredEvent.lane.toUpperCase()} LANE
-          </span>
-        </div>
-      )}
-
-      {/* Mobile / Android: Very Small & Compact Stage Indicator Pill */}
-      {hoveredEvent && (
-        <div
-          className="flex sm:hidden absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/90 backdrop-blur-md border px-3.5 py-1.5 rounded-full shadow-[0_0_12px_rgba(255,95,207,0.3)] items-center justify-center gap-2 text-[11px] font-mono pointer-events-none transition-all z-30 max-w-[90vw] whitespace-nowrap overflow-hidden"
+          className="flex absolute bottom-5 sm:bottom-8 left-1/2 -translate-x-1/2 bg-black/90 backdrop-blur-md border px-4 py-1.5 sm:px-5 sm:py-2 rounded-full shadow-[0_0_20px_rgba(255,95,207,0.35)] items-center justify-center gap-2 sm:gap-2.5 text-[11px] sm:text-xs font-mono pointer-events-none transition-all z-30 max-w-[92vw] whitespace-nowrap overflow-hidden"
           style={{ borderColor: hoveredEvent.accentColor }}
         >
           <span className="text-[#FAEB92] font-bold shrink-0">{hoveredEvent.stageCode}:</span>

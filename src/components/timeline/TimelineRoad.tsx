@@ -43,6 +43,10 @@ export const TimelineRoad: React.FC = () => {
   const [isMobile, setIsMobile] = useState<boolean>(false);
 
   useEffect(() => {
+    return retroAudio.subscribe((muted) => setIsMuted(muted));
+  }, []);
+
+  useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
@@ -184,8 +188,8 @@ export const TimelineRoad: React.FC = () => {
                   : 'bg-black/60 text-gray-500 border-white/10 hover:bg-black/80 hover:text-gray-300'
                 }
               `}
-              title={isMuted ? 'Unmute Audio' : 'Mute Audio'}
-              aria-label={isMuted ? 'Unmute Audio' : 'Mute Audio'}
+              title={isMuted ? 'Unmute Timeline SFX' : 'Mute Timeline SFX'}
+              aria-label={isMuted ? 'Unmute Timeline SFX' : 'Mute Timeline SFX'}
             >
               {!isMuted ? (
                 <Volume2 className="w-5 h-5 text-[#FF5FCF] drop-shadow-[0_0_8px_#FF5FCF]" />

@@ -101,12 +101,35 @@
   color: var(--pink);
   letter-spacing: 0.14em;
   font-weight: 700;
+  white-space: nowrap;
 }
 
 .btnGroup {
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+.lockedBadge {
+  background: rgba(153, 41, 234, 0.25);
+  border: 1px solid rgba(255, 95, 207, 0.45);
+  color: var(--cream);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  padding: 5px 12px;
+  border-radius: 2px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.lockIcon {
+  color: var(--pink);
+  filter: drop-shadow(0 0 6px var(--pink));
 }
 
 .ctrlBtn {
@@ -130,6 +153,10 @@
   background: var(--pink);
   color: #000000;
   box-shadow: 0 0 16px rgba(255, 95, 207, 0.7);
+}
+
+.slotCardLocked {
+  cursor: default;
 }
 
 /* RECTANGULAR RESPONSIVE GRID OF COMPACT LOOTBOX CARDS */
